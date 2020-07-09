@@ -1,34 +1,34 @@
 ﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: <appname>-deployment
+  name: productsapi-deployment
   labels:
-    app: <appname>
+    app: productsapi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: <appname>	  
+      app: productsapi	  
   template:
     metadata:
       labels:
-        app: <appname>
+        app: productsapi
     spec:
       containers:
-      - name: <appname>
-        image: <url>
+      - name: productsapi
+        image: acrazuredevopsdemo.azurecr.io/productservice:latest
         ports:
         - containerPort: 8080
       imagePullSecrets:
-      - name: <secret>
+      - name: mysupersecret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: <servicename>
+  name: productservice
 spec:
   type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: <appname>
+    app: productsapi
